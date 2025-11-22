@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Source Book: Mini Vue</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Patrick Hand', cursive;
+        background-color: #FFF8E7; /* Cream background */
+        margin: 0;
+        overflow: hidden; /* Handled by App container */
+        color: #2c3e50;
+      }
+      code, pre, textarea, input {
+        font-family: 'Space Mono', monospace;
+      }
+      
+      /* Vue specific styles within content */
+      .vue-code {
+        background-color: #e8f5e9;
+        color: #42b883;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
+        border: 1px solid #a5d6a7;
+      }
+
+      .sketchy-border {
+        border: 2px solid black;
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .sketchy-border:hover {
+        transform: translateY(-2px);
+        box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes blink {
+        0%, 90%, 100% { transform: scaleY(1); }
+        95% { transform: scaleY(0.1); }
+      }
+      .animate-blink {
+        animation: blink 4s infinite;
+      }
+
+      /* Hide Scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+
+      /* Strict Scroll Snap */
+      .snap-always {
+        scroll-snap-stop: always;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
