@@ -1,5 +1,4 @@
-
-import { ChapterData } from './types';
+import { ChapterData } from "./types";
 
 export const CHAPTERS: ChapterData[] = [
   {
@@ -8,16 +7,17 @@ export const CHAPTERS: ChapterData[] = [
     color: "bg-emerald-100",
     pages: [
       {
-        id: '1-1',
-        type: 'read',
+        id: "1-1",
+        type: "read",
         title: "The Spy",
-        illustration: 'reactivity-eye',
+        illustration: "reactivity-eye",
         content: `
           <p>Welcome! We begin our journey with <b>Reactivity</b>.</p>
           <p>In the old days (Vue 2), Vue acted like a spy. It would walk into your data objects and secretly replace every property with a magical trap.</p>
-          <p>This trap is called <code class="vue-code">Object.defineProperty</code>. It allowed Vue to detect whenever you touched a property.</p>
+          <p>This trap is called <code class="vue-code">Object.defineProperty</code>. It allowed Vue to detect whenever you touched a property (getter) or changed it (setter).</p>
         `,
-        codeSnippet: `// The "Trap"
+        codeSnippet: `
+// The "Trap"
 let internalValue = 10;
 
 Object.defineProperty(data, 'count', {
@@ -29,19 +29,19 @@ Object.defineProperty(data, 'count', {
     // 2. Tell everyone it changed!
     internalValue = newVal;
   }
-});`
+});`,
       },
       {
-        id: '1-2',
-        type: 'read',
+        id: "1-2",
+        type: "read",
         title: "The Bell",
-        illustration: 'dep-bell',
+        illustration: "dep-bell",
         content: `
           <p>Knowing something changed isn't enough. We need to know <i>who</i> cares.</p>
-          <p>We use a class called <b>Dep</b> (Dependency). Think of it like a Town Bell.</p>
+          <p>We use a class called <code class="vue-code">Dep</code> (Dependency). Think of it like a Town Bell.</p>
           <ul>
-            <li><b>depend()</b>: "I'm listening!" (Subscribe)</li>
-            <li><b>notify()</b>: "Ring the bell!" (Publish)</li>
+            <li><code class="vue-code">depend()</code>: "I'm listening!" (Subscribe) - Used when we read data.</li>
+            <li><code class="vue-code">notify()</code>: "Ring the bell!" (Publish) - Used when we change data.</li>
           </ul>
         `,
         codeSnippet: `class Dep {
@@ -58,22 +58,23 @@ Object.defineProperty(data, 'count', {
   notify() {
     this.subs.forEach(effect => effect());
   }
-}`
+}`,
       },
       {
-        id: '1-3',
-        type: 'challenge',
+        id: "1-3",
+        type: "challenge",
         title: "Coding the Trap",
         challenge: {
-            subtitle: "defineReactive",
-            description: "Your turn! Finish the `defineReactive` function. The getter is ready. You need to finish the **setter** to alert the dependency manager when data changes.",
-            visualType: 'reactivity',
-            hints: [
-                "When the value changes, we need to alert someone.",
-                "The `dep` object has a method to alert listeners.",
-                "Call `dep.notify()`"
-            ],
-            codeContext: `function defineReactive(obj, key, val) {
+          subtitle: "defineReactive",
+          description:
+            "Your turn! Finish the `defineReactive` function. The getter is ready. You need to finish the **setter** to alert the dependency manager when data changes. You have access to the `dep` instance—just call its notification method.",
+          visualType: "reactivity",
+          hints: [
+            "When the value changes, we need to alert someone.",
+            "The `dep` object has a method to alert listeners.",
+            "Call `dep.notify()`",
+          ],
+          codeContext: `function defineReactive(obj, key, val) {
   const dep = new Dep();
 
   Object.defineProperty(obj, key, {
@@ -90,36 +91,37 @@ Object.defineProperty(data, 'count', {
     }
   });
 }`,
-            codePre: `    set: function reactiveSetter(newVal) {
+          codePre: `    set: function reactiveSetter(newVal) {
       if (newVal === val) return;
       val = newVal;
       
       // TODO: Ring the bell!
 `,
-            codePost: `    }
+          codePost: `    }
   });
 }`,
-            placeholder: "      // dep...",
-            correctAnswer: ["dep.notify()", "dep.notify();"]
-        }
-      }
-    ]
+          placeholder: "      // dep...",
+          correctAnswer: ["dep.notify()", "dep.notify();"],
+        },
+      },
+    ],
   },
   {
     id: 2,
     title: "Virtual DOM",
     color: "bg-purple-100",
     pages: [
-        {
-            id: '2-1',
-            type: 'read',
-            title: "The Blueprint",
-            illustration: 'vdom-tree',
-            content: `
+      {
+        id: "2-1",
+        type: "read",
+        title: "The Blueprint",
+        illustration: "vdom-tree",
+        content: `
              <p>Touching the real DOM is slow. It's like moving furniture in real life.</p>
-             <p>Vue uses a <b>Virtual DOM</b>—a lightweight sketch of your UI. It's just a tree of JavaScript objects called <b>VNodes</b>.</p>
+             <p>Vue uses a <b>Virtual DOM</b>—a lightweight sketch of your UI. It's just a tree of JavaScript objects called <code class="vue-code">VNodes</code>.</p>
+             <p>Because they are just JS objects, we can create millions of them without slowing down the browser.</p>
             `,
-             codeSnippet: `// Virtual Node (Cheap)
+        codeSnippet: `// Virtual Node (Cheap)
              
 const vnode = {
   tag: 'div',
@@ -127,124 +129,135 @@ const vnode = {
 };
 
 // Real DOM Node (Expensive)
-// [HTMLDivElement] -> 100s of properties`
-        },
-        {
-            id: '2-2',
-            type: 'challenge',
-            title: "The Architect",
-            challenge: {
-                subtitle: "The h() Function",
-                description: "Developers use `h()` to create VNodes easily. Implement `h` to return the VNode object. We need to ensure the object has the correct shape.",
-                visualType: 'vdom',
-                hints: [
-                    "The function arguments are tag, props, and children.",
-                    "We need to assign the `children` argument to the object key.",
-                    "Add `children: children || []` to the object."
-                ],
-                codeContext: `function h(tag, props, children) {
+// [HTMLDivElement] -> 100s of properties`,
+      },
+      {
+        id: "2-2",
+        type: "challenge",
+        title: "The Architect",
+        challenge: {
+          subtitle: "The h() Function",
+          description:
+            "Developers use `h()` to create VNodes easily. Implement `h` to return the VNode object. It receives `tag`, `props`, and `children` as arguments. Return an object with these properties.",
+          visualType: "vdom",
+          hints: [
+            "The function arguments are tag, props, and children.",
+            "We need to assign the `children` argument to the object key.",
+            "Add `children: children || []` to the object.",
+          ],
+          codeContext: `function h(tag, props, children) {
   return {
     tag: tag,
     props: props || {},
     children: children || []
   };
 }`,
-                codePre: `function h(tag, props, children) {
+          codePre: `function h(tag, props, children) {
   return {
     tag: tag,
     props: props || {},
 `,
-                codePost: `  };
+          codePost: `  };
 }`,
-                placeholder: "    // children: ...",
-                correctAnswer: ["children: children || []", "children: children", "children", "children: children,"]
-            }
-        }
-    ]
+          placeholder: "    // children: ...",
+          correctAnswer: [
+            "children: children || []",
+            "children: children",
+            "children",
+            "children: children,",
+          ],
+        },
+      },
+    ],
   },
   {
     id: 3,
     title: "Renderer",
     color: "bg-orange-100",
     pages: [
-        {
-            id: '3-1',
-            type: 'read',
-            title: "The Builder",
-            illustration: 'mount-plant',
-            content: `
+      {
+        id: "3-1",
+        type: "read",
+        title: "The Builder",
+        illustration: "mount-plant",
+        content: `
              <p>Now we need a <b>Renderer</b> to turn VNodes into real DOM.</p>
-             <p>This process is called <b>Mounting</b>. It creates the element and inserts it into the page.</p>
-            `
-        },
-        {
-            id: '3-2',
-            type: 'challenge',
-            title: "Construction",
-            challenge: {
-                subtitle: "Mount Function",
-                description: "We created the element `el`. Now, put it inside the `container` so it actually appears on screen.",
-                visualType: 'render',
-                hints: [
-                    "We have an `el` and a `container`.",
-                    "The `container` is a parent DOM node.",
-                    "Use `container.appendChild(el)`"
-                ],
-                codeContext: `function mount(vnode, container) {
+             <p>This process is called <b>Mounting</b>. It creates the actual HTML element based on the VNode's tag and inserts it into the page container.</p>
+            `,
+      },
+      {
+        id: "3-2",
+        type: "challenge",
+        title: "Construction",
+        challenge: {
+          subtitle: "Mount Function",
+          description:
+            "We created the element `el`. Now, put it inside the `container` so it actually appears on screen. Use the standard DOM API `appendChild`.",
+          visualType: "render",
+          hints: [
+            "We have an `el` and a `container`.",
+            "The `container` is a parent DOM node.",
+            "Use `container.appendChild(el)`",
+          ],
+          codeContext: `function mount(vnode, container) {
   const el = document.createElement(vnode.tag);
   if (typeof vnode.children === 'string') {
     el.textContent = vnode.children;
   }
   container.appendChild(el);
 }`,
-                codePre: `function mount(vnode, container) {
+          codePre: `function mount(vnode, container) {
   const el = document.createElement(vnode.tag);
   if (typeof vnode.children === 'string') {
     el.textContent = vnode.children;
   }
   // TODO: Insert into container
 `,
-                codePost: `}`,
-                placeholder: "  // container...",
-                correctAnswer: ["container.appendChild(el)", "container.appendChild(el);"]
-            }
-        }
-    ]
+          codePost: `}`,
+          placeholder: "  // container...",
+          correctAnswer: [
+            "container.appendChild(el)",
+            "container.appendChild(el);",
+          ],
+        },
+      },
+    ],
   },
   {
     id: 4,
     title: "Patching",
     color: "bg-blue-100",
     pages: [
-        {
-            id: '4-1',
-            type: 'read',
-            title: "Diffing",
-            illustration: 'patch-diff',
-            content: `
+      {
+        id: "4-1",
+        type: "read",
+        title: "Diffing",
+        illustration: "patch-diff",
+        content: `
              <p>When data changes, we don't destroy the world. We <b>Patch</b> it.</p>
-             <p>Vue compares the Old VNode vs. New VNode. If the tag is the same, it reuses the element and just updates the text.</p>
+             <p>Vue compares the Old VNode vs. New VNode. If the tag is the same, it reuses the element and just updates the changed parts (like text or props). This is much faster than rebuilding.</p>
             `,
-            codeSnippet: `// Old: <div>Hello</div>
+        codeSnippet: `// Old: <div>Hello</div>
 // New: <div>World</div>
 
 // Result:
-el.textContent = 'World'; // Efficient!`
-        },
-        {
-            id: '4-2',
-            type: 'challenge',
-            title: "Patch Logic",
-            challenge: {
-                subtitle: "Patch Text",
-                description: "If tags match but children differ, we don't replace the element. We just update the text content.",
-                visualType: 'patch',
-                hints: [
-                    "The element is stored in `el`.",
-                    "The new text is in `n2.children`.",
-                    "Set `el.textContent = n2.children`"
-                ],
-                codeContext: `function patch(n1, n2) {
+el.textContent = 'World'; // Efficient!`,
+      },
+      {
+        id: "4-2",
+        type: "challenge",
+        title: "Patch Logic",
+        challenge: {
+          subtitle: "Patch Text",
+          description:
+            "If tags match but children differ, we don't replace the element. We just update the text content. The real DOM element is in `el`, and the new text is in `n2.children`. Assign the new text to the element.",
+          visualType: "patch",
+          hints: [
+            "The element is stored in `el`.",
+            "The new text is in `n2.children`.",
+            "Set `el.textContent = n2.children`",
+          ],
+          codeContext: `function patch(n1, n2) {
   if (n1.tag === n2.tag) {
     const el = n2.el = n1.el;
     if (n1.children !== n2.children) {
@@ -252,116 +265,125 @@ el.textContent = 'World'; // Efficient!`
     }
   }
 }`,
-                codePre: `function patch(n1, n2) {
+          codePre: `function patch(n1, n2) {
   if (n1.tag === n2.tag) {
     const el = n2.el = n1.el;
     if (n1.children !== n2.children) {
       // TODO: Update text
 `,
-                codePost: `    }
+          codePost: `    }
   }
 }`,
-                placeholder: "      // el.textContent = ...",
-                correctAnswer: ["el.textContent = n2.children", "el.textContent = n2.children;"]
-            }
-        }
-    ]
+          placeholder: "      // el.textContent = ...",
+          correctAnswer: [
+            "el.textContent = n2.children",
+            "el.textContent = n2.children;",
+          ],
+        },
+      },
+    ],
   },
   {
     id: 5,
     title: "Vue 3: The Proxy",
     color: "bg-pink-100",
     pages: [
-        {
-            id: '5-1',
-            type: 'read',
-            title: "The Upgrade",
-            illustration: 'proxy-shield',
-            content: `
+      {
+        id: "5-1",
+        type: "read",
+        title: "The Upgrade",
+        illustration: "proxy-shield",
+        content: `
              <p>Vue 3 brought a revolution: <b>Proxies</b>.</p>
-             <p>Instead of defining properties one by one (` + 'Object.defineProperty' + `), a Proxy wraps the <i>entire</i> object.</p>
+             <p>Instead of defining properties one by one (<code class="vue-code">Object.defineProperty</code>), a Proxy wraps the <i>entire</i> object.</p>
              <p>It intercepts EVERYTHING: adding keys, deleting keys, checking keys. No more strict limits!</p>
             `,
-            codeSnippet: `const handler = {
+        codeSnippet: `const handler = {
   get(target, key, receiver) {
     track(target, key);
     return Reflect.get(target, key, receiver);
   },
   set(target, key, value, receiver) {
     let oldValue = target[key];
-    let result = Reflect.set(target, key, value, receiver);
+    let result = 
+      Reflect.set(target, key, value, receiver);
     if (oldValue !== value) {
       trigger(target, key);
     }
     return result;
   }
 };
-const proxy = new Proxy(original, handler);`
-        },
-        {
-            id: '5-2',
-            type: 'challenge',
-            title: "Reactive 2.0",
-            challenge: {
-                subtitle: "reactive()",
-                description: "Implement the `reactive` function using Proxy. We simply need to return a new Proxy that wraps the target object with our handlers.",
-                visualType: 'reactivity',
-                hints: [
-                    "We need to return a `new Proxy` instance.",
-                    "The constructor takes `target` and `mutableHandlers`.",
-                    "Return `new Proxy(target, mutableHandlers)`"
-                ],
-                codeContext: `function reactive(target) {
+const proxy = new Proxy(original, handler);`,
+      },
+      {
+        id: "5-2",
+        type: "challenge",
+        title: "Reactive 2.0",
+        challenge: {
+          subtitle: "reactive()",
+          description:
+            "Implement the `reactive` function using Proxy. Return a new `Proxy` that wraps the `target`. We have already imported `mutableHandlers` for you to use as the second argument.",
+          visualType: "reactivity",
+          hints: [
+            "We need to return a `new Proxy` instance.",
+            "The constructor takes `target` and `mutableHandlers`.",
+            "Return `new Proxy(target, mutableHandlers)`",
+          ],
+          codeContext: `function reactive(target) {
   return new Proxy(target, mutableHandlers);
 }`,
-                codePre: `function reactive(target) {
+          codePre: `function reactive(target) {
   // TODO: Wrap target in a Proxy
 `,
-                codePost: `}`,
-                placeholder: "  // return new Proxy...",
-                correctAnswer: ["return new Proxy(target, mutableHandlers)", "return new Proxy(target, mutableHandlers);"]
-            }
-        }
-    ]
+          codePost: `}`,
+          placeholder: "  // return new Proxy...",
+          correctAnswer: [
+            "return new Proxy(target, mutableHandlers)",
+            "return new Proxy(target, mutableHandlers);",
+          ],
+        },
+      },
+    ],
   },
   {
     id: 6,
     title: "Vapor Mode",
     color: "bg-cyan-100",
     pages: [
-        {
-            id: '6-1',
-            type: 'read',
-            title: "No More VDOM?",
-            illustration: 'vapor-steam',
-            content: `
+      {
+        id: "6-1",
+        type: "read",
+        title: "No More VDOM?",
+        illustration: "vapor-steam",
+        content: `
              <p>The future is here. <b>Vapor Mode</b> is an experimental compilation strategy.</p>
              <p>It realizes that if we know the structure of the template at compile time, we don't need a Virtual DOM at all!</p>
              <p>It compiles templates directly into surgical DOM operations. It's faster, lighter, and uses less memory.</p>
             `,
-            codeSnippet: `// Template: <div :id="id">{{ count }}</div>
+        codeSnippet: `// Template: <div :id="id">{{ count }}</div>
 
 // Vapor Output:
 const t0 = document.createElement('div')
 renderEffect(() => {
   t0.id = ctx.id
   t0.textContent = ctx.count
-})`
-        },
-        {
-            id: '6-2',
-            type: 'challenge',
-            title: "Vapor Logic",
-            challenge: {
-                subtitle: "Direct Update",
-                description: "In Vapor mode, we skip the VNode and update the DOM element directly inside an effect. Set the element's textContent to the new value.",
-                visualType: 'render',
-                hints: [
-                    "We are inside an effect that runs when data changes.",
-                    "We need to update `el.textContent`.",
-                    "Set it equal to `ctx.count`."
-                ],
-                codeContext: `function render(ctx) {
+})`,
+      },
+      {
+        id: "6-2",
+        type: "challenge",
+        title: "Vapor Logic",
+        challenge: {
+          subtitle: "Direct Update",
+          description:
+            "In Vapor mode, we skip the VNode and update the DOM element directly inside an effect. The element `el` and data `ctx` are available. Set `el.textContent` to `ctx.count`.",
+          visualType: "render",
+          hints: [
+            "We are inside an effect that runs when data changes.",
+            "We need to update `el.textContent`.",
+            "Set it equal to `ctx.count`.",
+          ],
+          codeContext: `function render(ctx) {
   const el = document.createElement('div');
   
   effect(() => {
@@ -370,19 +392,22 @@ renderEffect(() => {
   
   return el;
 }`,
-                codePre: `function render(ctx) {
+          codePre: `function render(ctx) {
   const el = document.createElement('div');
   
   effect(() => {
     // TODO: Update el directly
 `,
-                codePost: `  });
+          codePost: `  });
   return el;
 }`,
-                placeholder: "    // el.textContent...",
-                correctAnswer: ["el.textContent = ctx.count", "el.textContent = ctx.count;"]
-            }
-        }
-    ]
-  }
+          placeholder: "    // el.textContent...",
+          correctAnswer: [
+            "el.textContent = ctx.count",
+            "el.textContent = ctx.count;",
+          ],
+        },
+      },
+    ],
+  },
 ];
