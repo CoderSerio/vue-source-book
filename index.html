@@ -3,7 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Source Book: Mini Vue</title>
+    <title>Source Book: Mini Vue - Interactive Source Code Journey</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="An interactive, hand-drawn journey through the core concepts of Vue.js source code. Learn Reactivity, Virtual DOM, and Compilers by completing the missing logic." />
+    <meta name="keywords" content="Vue.js, Source Code, Tutorial, Interactive, Learning, JavaScript, Frontend, Framework, Reactivity, VDOM, Vapor Mode" />
+    <meta name="author" content="CoderSerio" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vue-source-book.vercel.app/" />
+    <meta property="og:title" content="Source Book: Mini Vue" />
+    <meta property="og:description" content="Master Vue.js internals through an interactive, hand-drawn coding adventure." />
+    <meta property="og:image" content="https://vuejs.org/images/logo.png" /> <!-- Placeholder for actual OG image -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://vue-source-book.vercel.app/" />
+    <meta property="twitter:title" content="Source Book: Mini Vue" />
+    <meta property="twitter:description" content="Master Vue.js internals through an interactive, hand-drawn coding adventure." />
+    <meta property="twitter:image" content="https://vuejs.org/images/logo.png" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "Source Book: Mini Vue",
+      "description": "An interactive course to learn Vue.js internal architecture.",
+      "provider": {
+        "@type": "Person",
+        "name": "CoderSerio",
+        "sameAs": "https://github.com/CoderSerio"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,6 +108,12 @@
       /* Strict Scroll Snap */
       .snap-always {
         scroll-snap-stop: always;
+      }
+      
+      /* Custom formatting for code blocks */
+      .formatted-code {
+        white-space: pre; /* Respect indentation */
+        tab-size: 2;
       }
     </style>
   <script type="importmap">

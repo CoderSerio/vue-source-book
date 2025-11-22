@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { ChapterData, PageData } from '../types';
 import CodePlayground from './CodePlayground';
 import PreviewBox from './PreviewBox';
 import ReadingSection from './ReadingSection';
+import { getGeminiExplanation } from '../services/geminiService';
 
 interface ChapterSectionProps {
   data: ChapterData;
@@ -22,9 +22,8 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({
   const [completedPages, setCompletedPages] = useState<Record<string, boolean>>({});
   const [userCodes, setUserCodes] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string | null>>({});
-  
-  // Stores which hint index (1-based) the user is currently on for a specific page
-  const [hintSteps, setHintSteps] = useState<Record<string, number>>({});
+  const [hints, setHints] = useState<Record<string, string>>({});
+  const [loadingHints, setLoadingHints] = useState<Record<string, boolean>>({});
 
   const handleRun = (page: PageData, code: string) => {
     if (!page.challenge) return;
@@ -45,30 +44,27 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({
     }
   };
 
-  const revealHint = (pageId: string) => {
-    setHintSteps(prev => {
-        const current = prev[pageId] || 0;
-        return { ...prev, [pageId]: current + 1 };
-    });
+  const askWizard = async (page: PageData) => {
+    if (!page.challenge) return;
+    
+    setLoadingHints(prev => ({ ...prev, [page.id]: true }));
+    const code = userCodes[page.id] || "empty";
+    const help = await getGeminiExplanation(data.title + ": " + page.challenge.subtitle, code);
+    setHints(prev => ({ ...prev, [page.id]: help }));
+    setLoadingHints(prev => ({ ...prev, [page.id]: false }));
   };
 
   return (
     <div id={`chapter-${data.id}`} className="w-full">
+      {/* Chapter Title Slide (Optional, integrated into first page or just distinct) */}
+      
       {data.pages.map((page) => {
-        
-        // Hint Logic
-        const currentHintStep = hintSteps[page.id] || 0;
-        const maxHints = page.challenge?.hints?.length || 0;
-        const activeHintText = currentHintStep > 0 && page.challenge?.hints 
-            ? page.challenge.hints[Math.min(currentHintStep, maxHints) - 1] 
-            : null;
-
         // Wrapper for snap behavior
         return (
-          <div key={page.id} className="min-h-screen w-full snap-start snap-always flex items-center justify-center p-4 md:p-8 relative">
+          <div key={page.id} className="min-h-screen w-full snap-start flex items-center justify-center p-4 md:p-8 relative">
             
             {/* Chapter Indicator Watermark */}
-            <div className={`absolute top-4 left-4 md:top-8 md:left-8 px-4 py-1 rounded-full border border-black/20 font-bold text-sm opacity-50 ${data.color} z-20`}>
+            <div className={`absolute top-4 left-4 md:top-8 md:left-8 px-4 py-1 rounded-full border border-black/20 font-bold text-sm opacity-50 ${data.color}`}>
                 CH.{data.id} - {data.title}
             </div>
 
@@ -79,8 +75,8 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({
               <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full max-h-[90vh]">
                   
                   {/* Left: Challenge Code */}
-                  <div className="flex flex-col gap-6 h-full justify-center relative z-10 w-full">
-                      <div className="bg-white p-6 sketchy-border border-2 relative shadow-lg">
+                  <div className="flex flex-col gap-6 h-full justify-center">
+                      <div className="bg-white p-6 sketchy-border border-2 relative z-10 shadow-lg">
                           <div className="absolute -top-3 -left-2 bg-black text-white px-3 py-1 text-xs font-bold rounded transform -rotate-3 shadow-md">
                               CHALLENGE
                           </div>
@@ -99,35 +95,21 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({
                           error={errors[page.id] || null}
                       />
 
-                      {/* Hints System (Hardcoded) */}
-                      {!completedPages[page.id] && page.challenge?.hints && (
-                        <div className="w-full">
-                            {currentHintStep === 0 ? (
+                      {/* Hints */}
+                      {!completedPages[page.id] && (
+                        <div className="flex justify-start pl-2">
+                            {!hints[page.id] ? (
                                 <button 
-                                    onClick={() => revealHint(page.id)}
-                                    className="w-full py-3 rounded-xl border-2 border-purple-200 bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold transition-all flex items-center justify-center gap-2 shadow-sm group"
+                                    onClick={() => askWizard(page)}
+                                    disabled={loadingHints[page.id]}
+                                    className="text-sm font-bold text-purple-600 hover:text-purple-800 transition-all flex items-center gap-2"
                                 >
-                                    <span className="text-xl group-hover:scale-110 transition-transform">🧙‍♂️</span> 
-                                    Ask the Wizard for a Hint
+                                    <span className="text-lg">🧙‍♂️</span> 
+                                    {loadingHints[page.id] ? "Consulting the orbs..." : "Need a hint?"}
                                 </button>
                             ) : (
-                                <div className="w-full bg-purple-50 p-4 rounded-xl border-2 border-purple-200 text-purple-900 shadow-sm animate-in fade-in slide-in-from-bottom-2 relative">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <div className="font-bold text-xs text-purple-400 uppercase">
-                                            Wizard's Wisdom ({Math.min(currentHintStep, maxHints)}/{maxHints})
-                                        </div>
-                                        {currentHintStep < maxHints && (
-                                            <button 
-                                                onClick={() => revealHint(page.id)}
-                                                className="text-xs font-bold text-purple-600 hover:text-purple-800 underline bg-purple-100 px-2 py-1 rounded"
-                                            >
-                                                Next Hint →
-                                            </button>
-                                        )}
-                                    </div>
-                                    <div className="font-hand text-lg leading-tight">
-                                        {activeHintText}
-                                    </div>
+                                <div className="bg-purple-50 p-3 rounded-lg border border-purple-200 text-purple-900 text-sm max-w-md animate-in fade-in slide-in-from-bottom-2">
+                                    <strong>Wizard says:</strong> {hints[page.id]}
                                 </div>
                             )}
                         </div>
@@ -145,6 +127,8 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({
           </div>
         );
       })}
+      
+      {/* Optional: Next Chapter Button Page if needed, or just rely on scroll */}
     </div>
   );
 };

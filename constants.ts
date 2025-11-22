@@ -120,6 +120,7 @@ Object.defineProperty(data, 'count', {
              <p>Vue uses a <b>Virtual DOM</b>—a lightweight sketch of your UI. It's just a tree of JavaScript objects called <b>VNodes</b>.</p>
             `,
              codeSnippet: `// Virtual Node (Cheap)
+             
 const vnode = {
   tag: 'div',
   children: 'Hello Vue'

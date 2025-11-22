@@ -1,28 +1,31 @@
 import { GoogleGenAI } from "@google/genai";
 
+// Initialize the client with the API key from the environment
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-export async function getGeminiExplanation(context: string, code: string): Promise<string> {
+export const getGeminiExplanation = async (topic: string, userCode: string): Promise<string> => {
   try {
+    const prompt = `
+      You are a helpful coding tutor for a Vue.js internal implementation course.
+      The student is stuck on a challenge about: "${topic}".
+      
+      Here is their current code:
+      \`\`\`javascript
+      ${userCode}
+      \`\`\`
+      
+      Please provide a short, helpful hint (max 2 sentences) to guide them towards the correct implementation without giving away the full answer directly.
+      Focus on the logic or syntax they might be missing.
+    `;
+
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: `
-        You are a friendly and helpful coding tutor wizard.
-        The student is working on a challenge about Vue.js internals.
-        
-        Context: ${context}
-        Student's Code:
-        ${code}
-        
-        The student is stuck and needs a hint.
-        Provide a short, encouraging hint (max 2 sentences). 
-        Do not give the direct answer code, just a conceptual nudge or a small syntax tip if they are close.
-        Adopt the persona of a wise wizard.
-      `,
+      contents: prompt,
     });
-    return response.text || "The spirits are silent.";
+
+    return response.text || "I couldn't generate a hint right now. Try reviewing the previous reading section!";
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "The wizard is currently unavailable.";
+    console.error("Error fetching hint from Gemini:", error);
+    return "The wizard is currently offline (API Error). Check your internet or API key.";
   }
-}
+};
