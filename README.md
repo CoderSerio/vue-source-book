@@ -32,16 +32,18 @@
 
 - 🎨 **Visual Storytelling** - Complex logic explained through hand-drawn sketches.
 - ⚡️ **Interactive Playground** - Write code and see instant feedback in the browser.
-- 🧩 **Step-by-Step** - Master Reactivity, VDOM, and Compiler incrementally.
+- 🧩 **Evolutionary Path** - Learn the evolution from Vue 2 Reactivity to Virtual DOM, Proxy, and Vapor Mode.
 - ⚛️ **Zero Config** - Start learning immediately, no environment setup required.
 
 ## 🧠 Core Concepts
 
 | Module | Description | Key Concepts |
 | :--- | :--- | :--- |
-| **Reactivity** | The heart of Vue's magic | `Proxy`, `Effect`, `Dependency Tracking` |
-| **Runtime** | How Vue renders to the DOM | `Virtual DOM`, `Diff Algorithm`, `Patch` |
-| **Compiler** | Template transformation | `Parsing`, `AST`, `Code Generation` |
+| **Reactivity (Vue 2)** | The classic "Spy" system | `Object.defineProperty`, `Dep`, `Getter/Setter` |
+| **Virtual DOM** | The blueprint of UI | `VNode`, `h()`, `Object Tree` |
+| **Renderer** | Turning blueprints into reality | `Mount`, `Patch`, `Diff Algorithm` |
+| **Reactivity (Vue 3)** | The modern "Proxy" revolution | `Proxy`, `Reflect`, `Trap` |
+| **Vapor Mode** | The future: No VDOM | `Surgical Updates`, `Compile-time Optimization` |
 
 ## 💻 Development
 
