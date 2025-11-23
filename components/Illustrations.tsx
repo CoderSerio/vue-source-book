@@ -134,7 +134,7 @@ export const IllustrationTree = () => (
     <circle
       cx="100"
       cy="40"
-      r="25"
+      r="40"
       fill="#fff"
       stroke="black"
       strokeWidth="3"
@@ -143,7 +143,7 @@ export const IllustrationTree = () => (
       x="100"
       y="45"
       textAnchor="middle"
-      fontSize="12"
+      fontSize="16"
       fontWeight="bold"
       fill="black"
     >
@@ -156,18 +156,18 @@ export const IllustrationTree = () => (
 
     {/* Child 1 */}
     <circle
-      cx="50"
-      cy="120"
-      r="20"
+      cx="40"
+      cy="140"
+      r="40"
       fill="#E0E7FF"
       stroke="black"
       strokeWidth="3"
     />
     <text
-      x="50"
-      y="125"
+      x="40"
+      y="145"
       textAnchor="middle"
-      fontSize="10"
+      fontSize="16"
       fontWeight="bold"
       fill="black"
     >
@@ -176,18 +176,18 @@ export const IllustrationTree = () => (
 
     {/* Child 2 */}
     <circle
-      cx="150"
-      cy="120"
-      r="20"
+      cx="160"
+      cy="140"
+      r="40"
       fill="#E0E7FF"
       stroke="black"
       strokeWidth="3"
     />
     <text
-      x="150"
-      y="125"
+      x="160"
+      y="145"
       textAnchor="middle"
-      fontSize="10"
+      fontSize="16"
       fontWeight="bold"
       fill="black"
     >
@@ -195,13 +195,13 @@ export const IllustrationTree = () => (
     </text>
 
     {/* Leaves/Decor */}
-    <path
+    {/* <path
       d="M150,90 Q165,85 170,100"
       stroke="#42b883"
       strokeWidth="2"
       fill="none"
-    />
-    <circle cx="170" cy="100" r="3" fill="#42b883" />
+    /> */}
+    {/* <circle cx="170" cy="100" r="3"  fill="#42b883" /> */}
   </svg>
 );
 
@@ -271,10 +271,10 @@ export const IllustrationPatch = () => (
   >
     {/* Old Box */}
     <rect
-      x="30"
-      y="40"
-      width="50"
-      height="50"
+      x="-40"
+      y="20"
+      width="80"
+      height="80"
       rx="5"
       fill="#ccc"
       stroke="black"
@@ -282,28 +282,28 @@ export const IllustrationPatch = () => (
       strokeDasharray="4 2"
       opacity="0.5"
     />
-    <text x="55" y="70" textAnchor="middle" fontSize="10">
+    <text x="0" y="68" textAnchor="middle" fontSize="16">
       OLD
     </text>
 
     {/* New Box */}
     <rect
-      x="120"
-      y="40"
-      width="50"
-      height="50"
+      x="170"
+      y="25"
+      width="80"
+      height="80"
       rx="5"
       fill="#42b883"
       stroke="black"
       strokeWidth="3"
     />
-    <text x="145" y="70" textAnchor="middle" fontSize="10" fontWeight="bold">
+    <text x="210" y="70" textAnchor="middle" fontSize="16" fontWeight="bold">
       NEW
     </text>
 
     {/* Arrow */}
     <path
-      d="M90,65 L110,65"
+      d="M60,65 L110,65"
       stroke="black"
       strokeWidth="4"
       markerEnd="url(#arrowhead)"
@@ -324,12 +324,12 @@ export const IllustrationPatch = () => (
 
     <text
       x="100"
-      y="120"
+      y="130"
       textAnchor="middle"
       fontFamily="Patrick Hand"
       fontSize="16"
     >
-      Patching changes...
+      Patching changes
     </text>
   </svg>
 );
@@ -342,43 +342,43 @@ export const IllustrationProxy = () => (
   >
     {/* Target Object */}
     <rect
-      x="60"
-      y="50"
-      width="80"
-      height="60"
+      x="55"
+      y="55"
+      width="96"
+      height="72"
       rx="10"
       fill="#fff"
       stroke="black"
       strokeWidth="2"
     />
-    <text x="100" y="85" textAnchor="middle" fontSize="12" fontWeight="bold">
+    <text x="104" y="96" textAnchor="middle" fontSize="16" fontWeight="bold">
       OBJECT
     </text>
 
     {/* Proxy Shield */}
     <path
-      d="M40,40 L160,40 L160,100 Q100,140 40,100 Z"
+      d="M20,40 L180,40 L180,120 Q100,180 20,120 Z"
       fill="#EC4899"
       stroke="black"
       strokeWidth="3"
       fillOpacity="0.3"
     />
-    <path
+    {/* <path
       d="M40,40 L160,40 L160,100 Q100,140 40,100 Z"
       fill="none"
       stroke="black"
       strokeWidth="3"
       strokeDasharray="5 5"
-    />
+    /> */}
 
     <text
       x="100"
       y="30"
       textAnchor="middle"
       fontFamily="Patrick Hand"
-      fontSize="16"
+      fontSize="20"
     >
-      Proxy Shield
+      Proxy
     </text>
   </svg>
 );

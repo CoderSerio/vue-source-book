@@ -67,12 +67,12 @@ Object.defineProperty(data, 'count', {
         challenge: {
           subtitle: "defineReactive",
           description:
-            "Your turn! Finish the `defineReactive` function. The getter is ready. You need to finish the **setter** to alert the dependency manager when data changes. You have access to the `dep` instance—just call its notification method.",
+            "Your turn! Finish the <code class='vue-code'>defineReactive</code> function. The getter is ready. You need to finish the <b>setter</b> to alert the dependency manager when data changes. You have access to the <code class='vue-code'>dep</code> instance—just call its notification method.",
           visualType: "reactivity",
           hints: [
             "When the value changes, we need to alert someone.",
-            "The `dep` object has a method to alert listeners.",
-            "Call `dep.notify()`",
+            "The <code class='vue-code'>dep</code> object has a method to alert listeners.",
+            "Call <code class='vue-code'>dep.notify()</code>",
           ],
           codeContext: `function defineReactive(obj, key, val) {
   const dep = new Dep();
@@ -138,12 +138,12 @@ const vnode = {
         challenge: {
           subtitle: "The h() Function",
           description:
-            "Developers use `h()` to create VNodes easily. Implement `h` to return the VNode object. It receives `tag`, `props`, and `children` as arguments. Return an object with these properties.",
+            "Developers use <code class='vue-code'>h()</code> to create VNodes easily. Implement <code class='vue-code'>h</code> to return the VNode object. It receives <code class='vue-code'>tag</code>, <code class='vue-code'>props</code>, and <code class='vue-code'>children</code> as arguments. Return an object with these properties.",
           visualType: "vdom",
           hints: [
-            "The function arguments are tag, props, and children.",
-            "We need to assign the `children` argument to the object key.",
-            "Add `children: children || []` to the object.",
+            "The function arguments are <code class='vue-code'>tag</code>, <code class='vue-code'>props</code>, and <code class='vue-code'>children</code>.",
+            "We need to assign the <code class='vue-code'>children</code> argument to the object key.",
+            "Add <code class='vue-code'>children: children || []</code> to the object.",
           ],
           codeContext: `function h(tag, props, children) {
   return {
@@ -192,12 +192,12 @@ const vnode = {
         challenge: {
           subtitle: "Mount Function",
           description:
-            "We created the element `el`. Now, put it inside the `container` so it actually appears on screen. Use the standard DOM API `appendChild`.",
+            "We created the element <code class='vue-code'>el</code>. Now, put it inside the <code class='vue-code'>container</code> so it actually appears on screen. Use the standard DOM API <code class='vue-code'>appendChild</code>.",
           visualType: "render",
           hints: [
-            "We have an `el` and a `container`.",
-            "The `container` is a parent DOM node.",
-            "Use `container.appendChild(el)`",
+            "We have an <code class='vue-code'>el</code> and a <code class='vue-code'>container</code>.",
+            "The <code class='vue-code'>container</code> is a parent DOM node.",
+            "Use <code class='vue-code'>container.appendChild(el)</code>",
           ],
           codeContext: `function mount(vnode, container) {
   const el = document.createElement(vnode.tag);
@@ -250,12 +250,12 @@ el.textContent = 'World'; // Efficient!`,
         challenge: {
           subtitle: "Patch Text",
           description:
-            "If tags match but children differ, we don't replace the element. We just update the text content. The real DOM element is in `el`, and the new text is in `n2.children`. Assign the new text to the element.",
+            "If tags match but children differ, we don't replace the element. We just update the text content. The real DOM element is in <code class='vue-code'>el</code>, and the new text is in <code class='vue-code'>n2.children</code>. Assign the new text to the element.",
           visualType: "patch",
           hints: [
-            "The element is stored in `el`.",
-            "The new text is in `n2.children`.",
-            "Set `el.textContent = n2.children`",
+            "The element is stored in <code class='vue-code'>el</code>.",
+            "The new text is in <code class='vue-code'>n2.children</code>.",
+            "Set <code class='vue-code'>el.textContent = n2.children</code>",
           ],
           codeContext: `function patch(n1, n2) {
   if (n1.tag === n2.tag) {
@@ -322,12 +322,12 @@ const proxy = new Proxy(original, handler);`,
         challenge: {
           subtitle: "reactive()",
           description:
-            "Implement the `reactive` function using Proxy. Return a new `Proxy` that wraps the `target`. We have already imported `mutableHandlers` for you to use as the second argument.",
+            "Implement the <code class='vue-code'>reactive</code> function using Proxy. Return a new <code class='vue-code'>Proxy</code> that wraps the <code class='vue-code'>target</code>. We have already imported <code class='vue-code'>mutableHandlers</code> for you to use as the second argument.",
           visualType: "reactivity",
           hints: [
-            "We need to return a `new Proxy` instance.",
-            "The constructor takes `target` and `mutableHandlers`.",
-            "Return `new Proxy(target, mutableHandlers)`",
+            "We need to return a <code class='vue-code'>new Proxy</code> instance.",
+            "The constructor takes <code class='vue-code'>target</code> and <code class='vue-code'>mutableHandlers</code>.",
+            "Return <code class='vue-code'>new Proxy(target, mutableHandlers)</code>",
           ],
           codeContext: `function reactive(target) {
   return new Proxy(target, mutableHandlers);
@@ -376,12 +376,12 @@ renderEffect(() => {
         challenge: {
           subtitle: "Direct Update",
           description:
-            "In Vapor mode, we skip the VNode and update the DOM element directly inside an effect. The element `el` and data `ctx` are available. Set `el.textContent` to `ctx.count`.",
+            "In Vapor mode, we skip the VNode and update the DOM element directly inside an effect. The element <code class='vue-code'>el</code> and data <code class='vue-code'>ctx</code> are available. Set <code class='vue-code'>el.textContent</code> to <code class='vue-code'>ctx.count</code>.",
           visualType: "render",
           hints: [
             "We are inside an effect that runs when data changes.",
-            "We need to update `el.textContent`.",
-            "Set it equal to `ctx.count`.",
+            "We need to update <code class='vue-code'>el.textContent</code>.",
+            "Set it equal to <code class='vue-code'>ctx.count</code>.",
           ],
           codeContext: `function render(ctx) {
   const el = document.createElement('div');

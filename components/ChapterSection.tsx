@@ -6,27 +6,16 @@ import ReadingSection from "./ReadingSection";
 
 interface ChapterSectionProps {
   data: ChapterData;
-  isActive: boolean;
-  nextChapterId: number | null;
-  scrollToChapter: (id: number) => void;
 }
 
-const ChapterSection: React.FC<ChapterSectionProps> = ({
-  data,
-  isActive,
-  nextChapterId,
-  scrollToChapter,
-}) => {
-  // State for challenges within this chapter
+const ChapterSection: React.FC<ChapterSectionProps> = ({ data }) => {
   const [completedPages, setCompletedPages] = useState<Record<string, boolean>>(
     {}
   );
   const [userCodes, setUserCodes] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string | null>>({});
-  // 每个 page.id 当前解锁到第几个提示（1-based，0 表示还没看提示）
   const [hintLevels, setHintLevels] = useState<Record<string, number>>({});
 
-  // Helper to increment hint level
   const incrementHintLevel = (pageId: string, maxLevel: number) => {
     setHintLevels((prev) => {
       const current = prev[pageId] ?? 0;
@@ -115,9 +104,12 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({
                     <h3 className="text-3xl font-bold mb-2 font-hand">
                       {page.challenge?.subtitle}
                     </h3>
-                    <p className="text-gray-600 text-lg leading-snug font-hand">
-                      {page.challenge?.description}
-                    </p>
+                    <div
+                      className="text-gray-600 text-lg leading-snug font-hand"
+                      dangerouslySetInnerHTML={{
+                        __html: page.challenge?.description || "",
+                      }}
+                    />
                   </div>
 
                   <CodePlayground
@@ -146,7 +138,12 @@ const ChapterSection: React.FC<ChapterSectionProps> = ({
                         </button>
                       ) : (
                         <div className="bg-purple-50 p-3 rounded-lg border border-purple-200 text-purple-900 text-sm max-w-md animate-in fade-in slide-in-from-bottom-2">
-                          <strong>Wizard says:</strong> {currentHintText}
+                          <strong>Wizard says:</strong>{" "}
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: currentHintText || "",
+                            }}
+                          />
                         </div>
                       )}
                     </div>
