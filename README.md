@@ -1,20 +1,67 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+
+<img src="public/favicon.svg" width="120" alt="Logo" />
+
+# Source Book: Mini Vue
+
+**An Interactive Journey into Vue.js Internals.**
+
+<p>
+  <a href="https://coderserio.github.io/vue-source-book/">
+    <img src="https://img.shields.io/badge/🚀_Start_Learning-Visit_Website-42b883?style=for-the-badge&logo=vue.js&logoColor=white" alt="Website">
+  </a>
+</p>
+
+<p>
+  <a href="https://github.com/CoderSerio/vue-source-book/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-black?style=flat-square" alt="License">
+  </a>
+  <a href="https://github.com/CoderSerio/vue-source-book/stargazers">
+    <img src="https://img.shields.io/github/stars/CoderSerio/vue-source-book?style=flat-square&color=yellow" alt="Stars">
+  </a>
+  <a href="https://github.com/CoderSerio/vue-source-book/network/members">
+    <img src="https://img.shields.io/github/forks/CoderSerio/vue-source-book?style=flat-square&color=orange" alt="Forks">
+  </a>
+</p>
+
+<br>
+
 </div>
 
-# Run and deploy your AI Studio app
+## ✨ Features
 
-This contains everything you need to run your app locally.
+- 🎨 **Visual Storytelling** - Complex logic explained through hand-drawn sketches.
+- ⚡️ **Interactive Playground** - Write code and see instant feedback in the browser.
+- 🧩 **Step-by-Step** - Master Reactivity, VDOM, and Compiler incrementally.
+- ⚛️ **Zero Config** - Start learning immediately, no environment setup required.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1xMx-9w9avmuyYdhEiNELKzFgabfK5LNr
+## 🧠 Core Concepts
 
-## Run Locally
+| Module | Description | Key Concepts |
+| :--- | :--- | :--- |
+| **Reactivity** | The heart of Vue's magic | `Proxy`, `Effect`, `Dependency Tracking` |
+| **Runtime** | How Vue renders to the DOM | `Virtual DOM`, `Diff Algorithm`, `Patch` |
+| **Compiler** | Template transformation | `Parsing`, `AST`, `Code Generation` |
 
-**Prerequisites:**  Node.js
+## 💻 Development
 
+Clone and run locally:
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+git clone https://github.com/CoderSerio/vue-source-book.git
+cd vue-source-book
+pnpm install
+pnpm dev
+```
+
+## 💛 Contributors
+
+Thanks to all the contributors!
+
+<a href="https://github.com/CoderSerio/vue-source-book/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=CoderSerio/vue-source-book" />
+</a>
+
+## 📄 License
+
+MIT © [Carbon](https://github.com/CoderSerio)

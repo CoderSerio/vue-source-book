@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 175">
+  <!-- Shadow Group -->
+  <g transform="translate(8, 8)" fill="black">
+    <path d="M100,165 L15,15 L185,15 Z" />
+  </g>
+
+  <!-- Green Triangle (Outer) -->
+  <path d="M100,165 L15,15 L185,15 Z" fill="#42b883" stroke="black" stroke-width="4" stroke-linejoin="round" />
+
+  <!-- Blue Triangle (Inner) -->
+  <path d="M100,75 L65,15 L135,15 Z" fill="#35495e" stroke="black" stroke-width="4" stroke-linejoin="round" />
+
+  <!-- Cute Face -->
+  <!-- Left Eye -->
+  <circle cx="75" cy="55" r="7" fill="black" />
+  <!-- Right Eye -->
+  <circle cx="125" cy="55" r="7" fill="black" />
+  <!-- Mouth -->
+  <path d="M90,70 Q100,80 110,70" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" />
+</svg>
