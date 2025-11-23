@@ -3,11 +3,15 @@ import { Twitter, Atom, Github } from "lucide-react";
 import VueLogo from "./VueLogo";
 
 const EndScreen: React.FC = () => {
-  const shareText = "I just built my own Mini Vue.js! 🚀 #SourceBook #VueJS";
+  const shareText =
+    "Just explored Vue.js core concepts through this interactive hand-drawn journey! 🤯 Understanding Reactivity & VDOM is so much easier this way. 🚀 #SourceBook #VueJS";
+  const shareUrl = "https://coderserio.github.io/vue-source-book/";
 
   const handleShare = () => {
     window.open(
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        shareText
+      )}&url=${encodeURIComponent(shareUrl)}`,
       "_blank"
     );
   };
